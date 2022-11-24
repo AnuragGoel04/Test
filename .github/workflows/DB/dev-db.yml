@@ -1,0 +1,11 @@
+name: Deploy db for DEV environment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-db-to-dev:
+    uses: ./.github/workflows/DB/db.yml
+    with:
+      env: 'dev'
+    secrets: inherit
