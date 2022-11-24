@@ -1,6 +1,8 @@
 name: Deploy db for DEV environment
 
 on:
+  push:
+    branches: "AnuragGoel04-patch-1"
   workflow_dispatch:
 
 jobs:
