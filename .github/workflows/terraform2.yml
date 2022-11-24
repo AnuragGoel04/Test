@@ -49,7 +49,11 @@ on:
     branches: [ "AnuragGoel04-patch-1" ]
 
   workflow_dispatch:
-
+  workflow_call:
+    inputs:
+      env:
+        required: true
+        type: string
 permissions:
   contents: read
 
