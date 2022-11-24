@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy-db-to-dev:
-    uses: ./.github/workflows/Terraform2.yml
+    uses: ./.github/workflows/terraform2.yml
     with:
       env: 'dev'
     secrets: inherit
