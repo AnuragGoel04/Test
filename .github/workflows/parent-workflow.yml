@@ -1,0 +1,11 @@
+name: Deploy TF on DEV
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-db-to-dev:
+    uses: ./.github/workflows/Terraform2.yml
+    with:
+      env: 'dev'
+    secrets: inherit
