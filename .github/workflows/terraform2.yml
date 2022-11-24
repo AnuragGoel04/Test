@@ -45,8 +45,6 @@
 name: 'Terraform'
 
 on:
-  push:
-    branches: [ "AnuragGoel04-patch-1" ]
 
   workflow_dispatch:
   workflow_call:
