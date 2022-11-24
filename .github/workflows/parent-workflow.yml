@@ -1,6 +1,8 @@
 name: Deploy TF on DEV
 
 on:
+  push:
+    branches: "AnuragGoel04-patch-1"
   workflow_dispatch:
 
 jobs:
