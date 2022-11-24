@@ -1,9 +1,11 @@
 name: Deploy TF on DEV
 
 on:
-  push:
-    branches: "AnuragGoel04-patch-1"
   workflow_dispatch:
+    inputs:
+      env:
+        required: true
+        type: string
 
 jobs:
   deploy-db-to-dev:
