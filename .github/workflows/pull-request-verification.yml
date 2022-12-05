@@ -2,12 +2,12 @@ name: Pull request verification plan
 
 on:
   pull_request:
-    branches: [main,AnuragGoel04-patch-1]
+    types: [opened, reopened]
+    branches: [AnuragGoel04-patch-1]
 
 jobs:
   verify-infra-changes:
     uses: ./.github/workflows/terraform2.yml
     with:
       env: 'prod'
-      apply-tf-changes: false
     secrets: inherit
