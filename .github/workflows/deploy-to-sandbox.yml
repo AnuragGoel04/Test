@@ -1,4 +1,4 @@
-name: Deploy TF on UAT
+name: Deploy TF on Sandbox
 
 on:
   push:
@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-db-to-prod:
+  deploy-to-sandbox:
     uses: ./.github/workflows/terraform.yml
     with:
       env-no-approvers: 'sandbox'
       env-with-approvers: 'sandbox'
-      apply-tf-changes: 'true'
+      apply-tf-changes: true
     secrets: inherit
