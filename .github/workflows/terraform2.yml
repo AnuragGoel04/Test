@@ -1,17 +1,13 @@
 name: 'Terraform'
 
 on:
-  workflow_call:
-    inputs:
-      env:
-        required: true
-        type: string
+  workflow_dispatch:
 
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: "${{ inputs.env }}"
+    environment: "prod"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
