@@ -6,8 +6,8 @@ on:
       env:
         required: true
         type: string
-      plan-only:
-        required: true
+      apply-tf-changes:
+        required: false
         type: boolean
 
 jobs:
@@ -52,7 +52,7 @@ jobs:
       run: terraform fmt -check
 
   terraform-apply:
-    if: plan-only == 'false'
+    if: apply-tf-changes == 'true'
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: "prod"
