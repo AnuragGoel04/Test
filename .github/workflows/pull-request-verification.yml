@@ -1,8 +1,8 @@
 name: Pull request verification plan
 
 on:
-  push:
-    branches: "main"
+  pull_request:
+    branches: [main,AnuragGoel04-patch-1]
 
 jobs:
   verify-infra-changes:
