@@ -6,6 +6,9 @@ on:
       env:
         required: true
         type: string
+      plan-only:
+        required: true
+        type: boolean
 
 jobs:
   terraform-plan:
@@ -49,6 +52,7 @@ jobs:
       run: terraform fmt -check
 
   terraform-apply:
+    if: plan-only == 'false'
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: "prod"
