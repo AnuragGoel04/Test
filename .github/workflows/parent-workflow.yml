@@ -1,15 +1,11 @@
-name: Deploy TF on DEV
+name: Deploy TF on Prod
 
 on:
   workflow_dispatch:
-    inputs:
-      env:
-        required: true
-        type: string
 
 jobs:
-  deploy-db-to-dev:
+  deploy-db-to-prod:
     uses: ./.github/workflows/terraform2.yml
     with:
-      env: 'dev'
+      env: 'prod'
     secrets: inherit
