@@ -1,13 +1,14 @@
 name: Pull request verification plan
 
 on:
-  #push:
-  #  branches: "main"
+  pull_request:
+    types: [opened, reopened]
   workflow_dispatch:
 
 jobs:
-  deploy-db-to-prod:
+  verify-infra-changes:
     uses: ./.github/workflows/terraform2.yml
     with:
       env: 'prod'
+      plan-only: 'true'
     secrets: inherit
