@@ -8,8 +8,9 @@ on:
 
 jobs:
   deploy-db-to-prod:
-    uses: ./.github/workflows/terraform2.yml
+    uses: ./.github/workflows/terraform.yml
     with:
-      env: 'uat'
+      env-no-approvers: 'uat-no-approvers'
+      env-with-approvers: 'uat'
       apply-tf-changes: 'true'
     secrets: inherit
