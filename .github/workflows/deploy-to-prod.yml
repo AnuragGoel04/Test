@@ -1,0 +1,14 @@
+name: Deploy TF on Prod
+
+on:
+  #push:
+  #  branches: "main"
+  workflow_dispatch:
+
+jobs:
+  deploy-db-to-prod:
+    uses: ./.github/workflows/terraform2.yml
+    with:
+      env: 'prod'
+      apply-tf-changes: 'true'
+    secrets: inherit

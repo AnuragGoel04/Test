@@ -1,0 +1,14 @@
+name: Pull request verification plan
+
+on:
+  pull_request:
+    types: [opened, reopened]
+  workflow_dispatch:
+
+jobs:
+  verify-infra-changes:
+    uses: ./.github/workflows/terraform2.yml
+    with:
+      env: 'prod'
+      apply-tf-changes: 'false'
+    secrets: inherit
