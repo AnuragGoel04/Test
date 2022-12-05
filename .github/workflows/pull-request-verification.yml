@@ -9,4 +9,5 @@ jobs:
     uses: ./.github/workflows/terraform2.yml
     with:
       env: 'prod'
+      apply-tf-changes: 'false'
     secrets: inherit
