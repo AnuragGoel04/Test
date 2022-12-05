@@ -2,8 +2,7 @@ name: Deploy TF on UAT
 
 on:
   push:
-    tags: ['*']
-    branches: ["main"]
+    branches: ["AnuragGoel04-patch-1"]
   workflow_dispatch:
 
 jobs:
