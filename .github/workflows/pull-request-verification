@@ -2,8 +2,7 @@ name: Pull request verification plan
 
 on:
   pull_request:
-    types: [opened, reopened]
-  workflow_dispatch:
+    branches: [main,AnuragGoel04-patch-1]
 
 jobs:
   verify-infra-changes:
