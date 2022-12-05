@@ -53,7 +53,7 @@ jobs:
       run: terraform fmt -check
 
   terraform-apply:
-    if: "${{ apply-tf-changes }}"
+    if: ${{ apply-tf-changes == 'true'}}
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: "prod"
