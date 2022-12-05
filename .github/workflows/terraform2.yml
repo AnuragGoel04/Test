@@ -8,6 +8,7 @@ on:
         type: string
       apply-tf-changes:
         required: false
+        default: false
         type: boolean
 
 jobs:
@@ -52,7 +53,7 @@ jobs:
       run: terraform fmt -check
 
   terraform-apply:
-    if: apply-tf-changes == 'true'
+    if: ${{ apply-tf-changes }}
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: "prod"
