@@ -3,7 +3,10 @@ name: 'Terraform'
 on:
   workflow_call:
     inputs:
-      env:
+      env-plan-no-approval:
+        required: true
+        type: string
+      env-apply-with-approval:
         required: true
         type: string
       apply-tf-changes:
@@ -15,7 +18,7 @@ jobs:
   terraform-plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    environment: "prod-plan"
+    environment: "${{  inputs.env-plan-no-approval  }}"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -32,9 +35,6 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-    - name: Print env
-      run: echo "${{ inputs.env }}"
 
     - name: Setup Secret
       run: echo "${{ secrets.MY_SECRET }}"
@@ -56,7 +56,7 @@ jobs:
     if: ${{ inputs.apply-tf-changes }}
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: "prod"
+    environment: "${{ inputs.env-apply-with-approval }}"
     needs: "terraform-plan"
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -73,9 +73,6 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-    - name: Print env
-      run: echo "${{ inputs.env }}"
 
     - name: Setup Secret
       run: echo "${{ secrets.MY_SECRET }}"
