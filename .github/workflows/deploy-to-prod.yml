@@ -7,7 +7,7 @@ jobs:
   deploy-db-to-prod:
     uses: ./.github/workflows/terraform.yml
     with:
-      env-no-approval: 'prod-no-approvers'
-      env-with-approval: 'prod'
+      env-no-approvers: 'prod-no-approvers'
+      env-with-approvers: 'prod'
       apply-tf-changes: 'true'
     secrets: inherit
