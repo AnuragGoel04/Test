@@ -44,16 +44,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: ap-southeast-2
-        #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        #role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-        #role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-        role-skip-session-tagging: true
-        role-duration-seconds: 3600
+#     - name: Configure AWS Credentials
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-region: ap-southeast-2
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+#         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+#         role-skip-session-tagging: true
+#         role-duration-seconds: 3600
 
     - name: Terraform Setup
       uses: hashicorp/setup-terraform@v2
@@ -63,11 +63,11 @@ jobs:
     - name: Terraform Init
       id: init
       working-directory: ./shared-infra/database
-      env:
-        #TF_VAR_access_key: ${{env.AWS_ACCESS_KEY_ID}}
-        #TF_VAR_secret_key: ${{env.AWS_SECRET_ACCESS_KEY}}
-        #TF_VAR_token: ${{env.AWS_SESSION_TOKEN}}
-        TF_WORKSPACE: delta-db-${{ inputs.delta-env }}
+#       env:
+#         TF_VAR_access_key: ${{env.AWS_ACCESS_KEY_ID}}
+#         TF_VAR_secret_key: ${{env.AWS_SECRET_ACCESS_KEY}}
+#         TF_VAR_token: ${{env.AWS_SESSION_TOKEN}}
+#         TF_WORKSPACE: delta-db-${{ inputs.delta-env }}
       run: |
         terraform init
 
