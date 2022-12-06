@@ -76,12 +76,19 @@ jobs:
     - name: Terraform Plan terraform- ${{  inputs.delta-env  }}
       run: terraform fmt -check
 
+#   approval:
+#     runs-on: ubuntu-latest
+#     environment: "approvals"
+#     steps:
+#     - name: Checkout
+#       run: echo "Need approval"
+    
   terraform-apply:
     if: ${{ inputs.apply-tf-changes }}
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     environment: "${{ inputs.github-env }}"
-    needs: "terraform-plan"
+    needs: ["terraform-plan"]
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
