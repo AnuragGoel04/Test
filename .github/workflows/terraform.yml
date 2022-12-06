@@ -3,10 +3,7 @@ name: 'Terraform'
 on:
   workflow_call:
     inputs:
-      env-no-approvers:
-        required: true
-        type: string
-      env-with-approvers:
+      github-env:
         required: true
         type: string
       apply-tf-changes:
@@ -83,7 +80,7 @@ jobs:
     if: ${{ inputs.apply-tf-changes }}
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: "${{ inputs.env-with-approvers }}"
+    environment: "${{ inputs.github-env }}"
     needs: "terraform-plan"
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
