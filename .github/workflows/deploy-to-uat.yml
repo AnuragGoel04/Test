@@ -12,5 +12,5 @@ jobs:
     with:
       github-env: 'uat'
       delta-env: 'uat'
-      apply-tf-changes: 'true'
+      apply-tf-changes: true
     secrets: inherit
