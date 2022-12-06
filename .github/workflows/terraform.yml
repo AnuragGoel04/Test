@@ -62,7 +62,7 @@ jobs:
     
     - name: Terraform Init
       id: init
-      working-directory: ./shared-infra/database
+#       working-directory: ./shared-infra/database
 #       env:
 #         TF_VAR_access_key: ${{env.AWS_ACCESS_KEY_ID}}
 #         TF_VAR_secret_key: ${{env.AWS_SECRET_ACCESS_KEY}}
