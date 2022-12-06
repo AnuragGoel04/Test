@@ -12,4 +12,5 @@ jobs:
       env-no-approvers: 'sandbox'
       env-with-approvers: 'sandbox'
       apply-tf-changes: true
+      delta-env: 'sbx'
     secrets: inherit
