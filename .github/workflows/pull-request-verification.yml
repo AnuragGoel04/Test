@@ -9,6 +9,6 @@ jobs:
   verify-infra-changes:
     uses: ./.github/workflows/terraform.yml
     with:
-      env-no-approvers: 'uat-no-approvers'
-      env-with-approvers: 'uat'
+      github-env: 'uat'
+      delta-env: 'uat'
     secrets: inherit
