@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-db-to-prod:
+  deploy-db-to-uat:
     uses: ./.github/workflows/terraform.yml
     with:
-      env-no-approvers: 'uat-no-approvers'
-      env-with-approvers: 'uat'
+      github-env: 'uat'
+      delta-env: 'uat'
       apply-tf-changes: 'true'
     secrets: inherit
