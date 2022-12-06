@@ -4,6 +4,8 @@ on:
   push:
     tags: ['*']
     branches: ["main"]
+    paths:
+      - 'shared-infra/database/**'
   workflow_dispatch:
 
 jobs:
