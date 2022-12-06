@@ -1,0 +1,17 @@
+name: Deploy TF on Sandbox
+
+on:
+  push:
+    branches: ["AnuragGoel04-patch-1"]
+    paths:
+      - 'shared-infra/database/**'
+  workflow_dispatch:
+
+jobs:
+  deploy-to-sandbox:
+    uses: ./.github/workflows/terraform.yml
+    with:
+      github-env: 'sandbox'
+      apply-tf-changes: true
+      delta-env: 'sbx'
+    secrets: inherit

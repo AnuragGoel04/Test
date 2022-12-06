@@ -1,13 +1,16 @@
-name: Deploy TF on Prod
+name: Deploy TF on UAT
 
 on:
+  push:
+    tags: ['*']
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
   deploy-db-to-prod:
     uses: ./.github/workflows/terraform.yml
     with:
-      env-no-approvers: 'prod-no-approvers'
-      env-with-approvers: 'prod'
+      env-no-approvers: 'uat-no-approvers'
+      env-with-approvers: 'uat'
       apply-tf-changes: 'true'
     secrets: inherit

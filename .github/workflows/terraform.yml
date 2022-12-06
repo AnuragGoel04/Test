@@ -3,19 +3,33 @@ name: 'Terraform'
 on:
   workflow_call:
     inputs:
-      env:
+      github-env:
         required: true
         type: string
       apply-tf-changes:
         required: false
         default: false
         type: boolean
+      delta-env:
+        required: true
+        type: string
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_ROLE_TO_ASSUME:
+        required: true
+      AWS_ROLE_EXTERNAL_ID:
+        required: true
+      TF_TOKEN:
+        required: true
 
 jobs:
   terraform-plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    environment: "prod-plan"
+    #environment: "${{  inputs.env-no-approvers  }}"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -27,37 +41,54 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+#     - name: Configure AWS Credentials
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-region: ap-southeast-2
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+#         role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+#         role-skip-session-tagging: true
+#         role-duration-seconds: 3600
+
+    - name: Terraform Setup
+      uses: hashicorp/setup-terraform@v2
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-    - name: Print env
-      run: echo "${{ inputs.env }}"
-
-    - name: Setup Secret
-      run: echo "${{ secrets.MY_SECRET }}"
-      
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+        cli_config_credentials_token: ${{ secrets.TF_TOKEN }}
     
     - name: Terraform Init
-      run: terraform init
+      id: init
+#       working-directory: ./shared-infra/database
+#       env:
+#         TF_VAR_access_key: ${{env.AWS_ACCESS_KEY_ID}}
+#         TF_VAR_secret_key: ${{env.AWS_SECRET_ACCESS_KEY}}
+#         TF_VAR_token: ${{env.AWS_SESSION_TOKEN}}
+#         TF_WORKSPACE: delta-db-${{ inputs.delta-env }}
+      run: |
+        terraform init
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
 
     # Generates an execution plan for Terraform
-    - name: Terraform Plan
+    - name: Terraform Plan terraform- ${{  inputs.delta-env  }}
       run: terraform fmt -check
 
+#   approval:
+#     runs-on: ubuntu-latest
+#     environment: "approvals"
+#     steps:
+#     - name: Checkout
+#       run: echo "Need approval"
+    
   terraform-apply:
     if: ${{ inputs.apply-tf-changes }}
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: "prod"
-    needs: "terraform-plan"
+    environment: "${{ inputs.github-env }}"
+    needs: ["terraform-plan"]
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
@@ -74,13 +105,10 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Print env
-      run: echo "${{ inputs.env }}"
-
     - name: Setup Secret
       run: echo "${{ secrets.MY_SECRET }}"
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
+    - name: Terraform Apply 
       run: terraform fmt -check

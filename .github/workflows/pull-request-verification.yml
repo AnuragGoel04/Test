@@ -3,11 +3,12 @@ name: Pull request verification plan
 on:
   pull_request:
     types: [opened, reopened]
-    branches: [AnuragGoel04-patch-1]
+    branches: [main]
 
 jobs:
   verify-infra-changes:
-    uses: ./.github/workflows/terraform2.yml
+    uses: ./.github/workflows/terraform.yml
     with:
-      env: 'prod'
+      github-env: 'uat'
+      delta-env: 'uat'
     secrets: inherit
