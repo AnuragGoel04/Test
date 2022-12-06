@@ -3,6 +3,8 @@ name: Deploy TF on Sandbox
 on:
   push:
     branches: ["AnuragGoel04-patch-1"]
+    paths:
+      - 'shared-infra/database/**'
   workflow_dispatch:
 
 jobs:
