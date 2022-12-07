@@ -44,7 +44,7 @@ jobs:
     - name: TEst
       uses: actions/checkout@v3
       with:
-        ref: "${{ inputs.release-tag == '' && ${GITHUB_REF##*/} || inputs.release-tag }}"
+        ref: "${{ inputs.release-tag == '' && '${GITHUB_REF##*/}' || inputs.release-tag }}"
 
 #     - name: Configure AWS Credentials
 #       uses: aws-actions/configure-aws-credentials@v1
