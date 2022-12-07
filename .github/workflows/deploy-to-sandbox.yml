@@ -17,7 +17,7 @@ jobs:
     uses: ./.github/workflows/terraform.yml
     with:
       github-env: 'sandbox'
-      apply-tf-changes: true
+      apply-tf-changes: false
       delta-env: 'sbx'
       release-tag: "${{ github.event.inputs.release_tag }}"
     secrets: inherit
