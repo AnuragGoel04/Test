@@ -13,6 +13,9 @@ on:
       delta-env:
         required: true
         type: string
+      release-tag:
+        required: false
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -37,15 +40,11 @@ jobs:
         shell: bash
 
     steps:
-#     # Checkout the repository to the GitHub Actions runner
-#     - name: Checkout
-#       uses: actions/checkout@v3
-
-    # Checkout the tag
-    - name: Checkout
+    # Checkout the repository to the GitHub Actions runner
+    - name: TEst
       uses: actions/checkout@v3
       with:
-        ref: test
+        ref: "${{ inputs.release-tag == '' && ${GITHUB_REF##*/} || inputs.release-tag }}"
 
 #     - name: Configure AWS Credentials
 #       uses: aws-actions/configure-aws-credentials@v1
@@ -74,13 +73,13 @@ jobs:
       run: |
         terraform init
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
+#     # Checks that all Terraform configuration files adhere to a canonical format
+#     - name: Terraform Format
+#       run: terraform fmt -check
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan terraform- ${{  inputs.delta-env  }}
-      run: terraform fmt -check
+#     # Generates an execution plan for Terraform
+#     - name: Terraform Plan terraform- ${{  inputs.delta-env  }}
+#       run: terraform fmt -check
 
 #   approval:
 #     runs-on: ubuntu-latest
@@ -89,32 +88,32 @@ jobs:
 #     - name: Checkout
 #       run: echo "Need approval"
     
-  terraform-apply:
-    if: ${{ inputs.apply-tf-changes }}
-    name: 'Terraform Apply'
-    runs-on: ubuntu-latest
-    environment: "${{ inputs.github-env }}"
-    needs: ["terraform-plan"]
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+#   terraform-apply:
+#     if: ${{ inputs.apply-tf-changes }}
+#     name: 'Terraform Apply'
+#     runs-on: ubuntu-latest
+#     environment: "${{ inputs.github-env }}"
+#     needs: ["terraform-plan"]
+#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+#     defaults:
+#       run:
+#         shell: bash
 
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v3
+#     steps:
+#     # Checkout the repository to the GitHub Actions runner
+#     - name: Checkout
+#       uses: actions/checkout@v3
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+#     - name: Setup Terraform
+#       uses: hashicorp/setup-terraform@v1
+#       with:
+#         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Setup Secret
-      run: echo "${{ secrets.MY_SECRET }}"
+#     - name: Setup Secret
+#       run: echo "${{ secrets.MY_SECRET }}"
 
-      # On push to "main", build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply 
-      run: terraform fmt -check
+#       # On push to "main", build or change infrastructure according to Terraform configuration files
+#       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+#     - name: Terraform Apply 
+#       run: terraform fmt -check
