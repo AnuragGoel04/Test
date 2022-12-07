@@ -39,7 +39,7 @@ jobs:
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: TEst
-      run: echo "${{ github.repository }}"
+      run: echo "${GITHUB_REF##*/}"
 
 #     - name: Configure AWS Credentials
 #       uses: aws-actions/configure-aws-credentials@v1
