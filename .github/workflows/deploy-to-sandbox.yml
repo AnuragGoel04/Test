@@ -6,6 +6,11 @@ on:
     paths:
       - 'shared-infra/database/**'
   workflow_dispatch:
+    inputs:
+      release_tag:
+        type: string
+        description: Release tag name
+        required: true
 
 jobs:
   deploy-to-sandbox:
@@ -14,4 +19,5 @@ jobs:
       github-env: 'sandbox'
       apply-tf-changes: true
       delta-env: 'sbx'
+      release-tag: "${{ github.event.inputs.release_tag }}"
     secrets: inherit
