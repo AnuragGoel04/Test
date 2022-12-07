@@ -10,7 +10,7 @@ on:
       release_tag:
         type: string
         description: Release tag name
-        required: true
+        required: false
 
 jobs:
   deploy-to-sandbox:
