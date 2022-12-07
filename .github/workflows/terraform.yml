@@ -42,6 +42,8 @@ jobs:
     steps:
     - name: Get Current BRANCH
       run: echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
+    - name: Get  BRANCH
+      run: echo "$GITHUB_ENV"
     # Checkout the repository to the GitHub Actions runner
     - name: TEst
       uses: actions/checkout@v3
