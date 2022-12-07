@@ -40,11 +40,13 @@ jobs:
         shell: bash
 
     steps:
+    - name: Get Current BRANCH
+      run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
     # Checkout the repository to the GitHub Actions runner
     - name: TEst
       uses: actions/checkout@v3
       with:
-        ref: "${{ inputs.release-tag == '' && ${GITHUB_REF##*/} || inputs.release-tag }}"
+        ref: ${{ inputs.release-tag == ''  && github.ref || inputs.release-tag  }}
 
 #     - name: Configure AWS Credentials
 #       uses: aws-actions/configure-aws-credentials@v1
