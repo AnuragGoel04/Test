@@ -16,7 +16,5 @@ jobs:
   verify-ui-changes:
     uses: ./.github/workflows/test-checkout.yml
     with:
-      github-env: 'uat'
-      delta-env: 'uat'
       release-tag: 'main'
     secrets: inherit
