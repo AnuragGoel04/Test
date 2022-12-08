@@ -47,8 +47,8 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: TEst
       uses: actions/checkout@v3
-#      with:
-#        ref: ${{ inputs.release-tag == ''  && env.BRANCH || inputs.release-tag  }}
+      with:
+        ref: ${{ inputs.release-tag == ''  && github.ref || inputs.release-tag  }}
 # ref: ${{ inputs.release-tag == ''  && github.ref || inputs.release-tag  }}
 #     - name: Configure AWS Credentials
 #       uses: aws-actions/configure-aws-credentials@v1
